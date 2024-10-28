@@ -10,9 +10,21 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      // Relacionamentos entre tabelas
+      usuarios.belongsToMany(models.roles, {
+        through: models.usuarios_roles,
+        as: 'usuario_roles', // Não pode ser o mesmo nome da tabela de relacionamento
+        foreignKey: 'usuario_id'
+      });
+
+      usuarios.belongsToMany(models.permissoes, {
+        through: models.usuarios_permissoes,
+        as: 'usuario_permissoes',
+        foreignKey: 'usuario_id'
+      });
     }
   }
+
   usuarios.init({
     nome: DataTypes.STRING,
     email: DataTypes.STRING,
